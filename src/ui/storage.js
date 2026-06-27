@@ -1,0 +1,1 @@
+const KEY='hatchforge.settings.v1';export const saveSettings=c=>localStorage.setItem(KEY,JSON.stringify(c));export const loadSettings=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch{return null}};export const exportSettings=c=>JSON.stringify(c,null,2);export const importSettings=s=>JSON.parse(s);
