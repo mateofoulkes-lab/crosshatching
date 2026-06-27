@@ -1,0 +1,4 @@
+export function defaultThresholds(levels){const count=levels-1;return Array.from({length:count},(_,i)=>Math.round(255-((i+.5)*255/count))).sort((a,b)=>b-a)}
+export function normalizeThresholds(levels,thresholds){return (thresholds?.length?thresholds:defaultThresholds(levels)).slice(0,levels-1).map(Number).sort((a,b)=>b-a)}
+export function posterize(grayObj,{levels=5,thresholds}){const th=normalizeThresholds(levels,thresholds);const map=new Uint8Array(grayObj.width*grayObj.height);for(let i=0;i<grayObj.gray.length;i++){let level=levels-1;for(let t=0;t<th.length;t++){if(grayObj.gray[i]>=th[t]){level=t;break}}map[i]=level}return {width:grayObj.width,height:grayObj.height,levels,thresholds:th,map}}
+export function extractLevelMasks(levelMap,mask){const masks=Array.from({length:levelMap.levels},()=>new Uint8Array(levelMap.map.length));for(let i=0;i<levelMap.map.length;i++)if(mask[i])masks[levelMap.map[i]][i]=1;return masks}

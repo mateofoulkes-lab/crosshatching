@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {posterize,defaultThresholds} from '../src/core/posterize.js';import {generateParallelLines,sampleLinesAgainstLevelMap} from '../src/core/hatchLines.js';import {targetLevelsForPattern} from '../src/core/cumulativeLayers.js';import {generateSvg} from '../src/core/svgExport.js';
+test('thresholds count',()=>assert.equal(defaultThresholds(5).length,4));
+test('posterize maps light to 0 and dark to max',()=>{const p=posterize({width:2,height:1,gray:new Uint8ClampedArray([250,10])},{levels:5,thresholds:[245,190,135,80]});assert.deepEqual([...p.map],[0,4])});
+test('parallel lines are generated',()=>assert.ok(generateParallelLines({minX:0,minY:0,maxX:10,maxY:10,width:10,height:10},45,2,0).length>3));
+test('sample lines clips to target level',()=>{const lm={width:4,height:1,levels:3,map:new Uint8Array([0,1,1,0])};const seg=sampleLinesAgainstLevelMap([{x1:0,y1:0,x2:3,y2:0}],lm,new Uint8Array([1,1,1,1]),[1],{sampleStep:1,minSegmentLength:1});assert.equal(seg.length,1)});
+test('cumulative target levels include darker levels',()=>assert.deepEqual(targetLevelsForPattern(2,5,{cumulativeMode:true}),[2,3,4]));
+test('svg export has groups and no raster image tag',()=>{const svg=generateSvg({width:10,height:10,layers:[{id:'hatch_level_1',color:'#000',strokeWidth:.2,segments:[{x1:0,y1:0,x2:1,y2:1}]}]},{widthMm:10,heightMm:10,keepAspect:true,allBlack:true,metadata:true});assert.match(svg,/g id="hatch_level_1"/);assert.doesNotMatch(svg,/<image/)})

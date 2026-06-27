@@ -1,0 +1,2 @@
+function clamp(v){return Math.max(0,Math.min(255,Math.round(v)))}
+export function applyToneAdjustments(gray,config){let src=gray.gray;const out=new Uint8ClampedArray(src.length);const c=config.contrast,b=config.brightness,g=Math.max(.05,config.gamma);for(let i=0;i<src.length;i++){let v=src[i]/255;v=Math.pow(v,1/g);v=((v-.5)*c+.5)+(b/255);let n=clamp(v*255);out[i]=config.invert?255-n:n}return {...gray,gray:out}}

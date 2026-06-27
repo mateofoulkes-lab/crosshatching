@@ -1,0 +1,2 @@
+import fs from 'node:fs';import path from 'node:path';
+fs.rmSync('dist',{recursive:true,force:true});for(const p of ['src','index.html','README.md','PROJECT_SPEC.md'])copy(p,path.join('dist',p));function copy(s,d){const st=fs.statSync(s);if(st.isDirectory()){fs.mkdirSync(d,{recursive:true});for(const f of fs.readdirSync(s))copy(path.join(s,f),path.join(d,f))}else{fs.mkdirSync(path.dirname(d),{recursive:true});fs.copyFileSync(s,d)}}console.log('Built static app into dist/');
