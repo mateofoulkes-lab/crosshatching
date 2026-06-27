@@ -13,7 +13,7 @@ Generate laser-friendly vector SVG hatching/cross-hatching from raster fantasy/r
 
 ## Technical decisions
 
-The implementation uses browser-native canvas APIs and dependency-light Vite. For the first ambitious pass, line clipping uses deterministic raster sampling against the computed `levelMap` and figure mask. This is robust offline and avoids shipping a large geometry stack before the UX is proven. Modules and function names are kept compatible with later polygon clipping/offset work.
+The implementation uses browser-native canvas APIs and a dependency-free static Node dev server. For the first ambitious pass, line clipping uses deterministic raster sampling against the computed `levelMap` and figure mask. This is robust offline and avoids shipping a large geometry stack before the UX is proven. Modules and function names are kept compatible with later polygon clipping/offset work.
 
 ## Data model
 

@@ -11,6 +11,8 @@ npm run build
 npm test
 ```
 
+Run the app through `npm run dev` or another static HTTP server. Do **not** open `index.html` directly with `file://`, because browser module loading and relative asset resolution are designed for HTTP origins. The HTML uses relative paths (`./src/main.js` and `./src/styles/main.css`), so it also works when hosted from GitHub Pages or another subpath instead of a domain root.
+
 ## What is implemented
 
 - Image loading with PNG/JPG/WebP, transparency support, max processing dimension, original/processed size display.
